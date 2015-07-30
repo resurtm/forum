@@ -9,6 +9,7 @@ class m150730_104001_create_section_table extends Migration
     {
         $this->createTable('{{%section}}', [
             'id' => Schema::TYPE_PK,
+
             'title' => Schema::TYPE_STRING . ' NOT NULL',
             'slug' => Schema::TYPE_STRING . ' NOT NULL',
 
