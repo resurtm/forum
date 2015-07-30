@@ -28,6 +28,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                '<id:\d+>-<slug:[\w\-]+>/<childId:\d+>-<childSlug:[\w\-]+>' => 'section/view',
+                '<id:\d+>-<slug:[\w\-]+>' => 'section/view',
+            ],
+        ],
     ],
     'params' => $params,
 ];

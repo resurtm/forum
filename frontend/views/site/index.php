@@ -26,7 +26,7 @@ $this->title = 'Forum';
                         <tbody>
                             <?php foreach ($section->children as $child): ?>
                                 <tr>
-                                    <td><?= Html::a(Html::encode($child->title), $section->getUrl()) ?></td>
+                                    <td><?= Html::a(Html::encode($child->title), $child->getUrl()) ?></td>
                                     <td></td>
                                 </tr>
                             <?php endforeach; ?>

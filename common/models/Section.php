@@ -70,7 +70,7 @@ class Section extends ActiveRecord
         if ($this->section_id === null) {
             return Url::toRoute(['section/view', 'id' => $this->id, 'slug' => $this->slug]);
         } else {
-            return Url::toRoute(['section/view', 'id' => $this->section->id, 'slug' => $this->section->slug,
+            return Url::toRoute(['section/view', 'id' => $this->parent->id, 'slug' => $this->parent->slug,
                 'childId' => $this->id, 'childSlug' => $this->slug]);
         }
     }
