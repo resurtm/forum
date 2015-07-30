@@ -48,4 +48,12 @@ class Section extends ActiveRecord
     {
         return $this->hasMany(Section::className(), ['section_id' => 'id']);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public static function find()
+    {
+        return new SectionQuery(get_called_class());
+    }
 }
