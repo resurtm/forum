@@ -13,7 +13,7 @@ class Migration extends BaseMigration
     {
         if ($options === null && $this->db->getDriverName() === 'mysql') {
             // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
-            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+            $options = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
         parent::createTable($table, $columns, $options);
     }
