@@ -68,7 +68,14 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        /** @var Section[] $sections */
+        $sections = Section::find()
+            ->roots()
+            ->orderBy('title')
+            ->with('children')
+            ->all();
+
+        return $this->render('index', ['sections' => $sections]);
     }
 
     public function actionLogin()
