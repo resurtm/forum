@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use yii\behaviors\TimestampBehavior;
@@ -46,7 +47,7 @@ class Section extends ActiveRecord
      */
     public function getChildren()
     {
-        return $this->hasMany(Section::className(), ['section_id' => 'id']);
+        return $this->hasMany(Section::className(), ['section_id' => 'id'])->inverseOf('parent');
     }
 
     /**
