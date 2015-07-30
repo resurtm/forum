@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use yii\helpers\Url;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\SluggableBehavior;
 
@@ -20,6 +21,8 @@ use yii\behaviors\SluggableBehavior;
  * @property integer $section_id
  * @property Section $parent
  * @property Section[] $children
+ *
+ * @property string $url to this section.
  */
 class Section extends ActiveRecord
 {
@@ -56,5 +59,19 @@ class Section extends ActiveRecord
     public static function find()
     {
         return new SectionQuery(get_called_class());
+    }
+
+    /**
+     * Generates URL to this section.
+     * @return string URL to this section.
+     */
+    public function getUrl()
+    {
+        if ($this->section_id === null) {
+            return Url::toRoute(['section/view', 'id' => $this->id, 'slug' => $this->slug]);
+        } else {
+            return Url::toRoute(['section/view', 'id' => $this->section->id, 'slug' => $this->section->slug,
+                'childId' => $this->id, 'childSlug' => $this->slug]);
+        }
     }
 }

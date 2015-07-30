@@ -10,7 +10,7 @@ $this->title = 'Forum';
     <?php foreach ($sections as $section): ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><?= Html::a(Html::encode($section->title), '#') ?></h3>
+                <h3 class="panel-title"><?= Html::a(Html::encode($section->title), $section->getUrl()) ?></h3>
             </div>
 
             <?php if (count($section->children) > 0): ?>
@@ -26,7 +26,7 @@ $this->title = 'Forum';
                         <tbody>
                             <?php foreach ($section->children as $child): ?>
                                 <tr>
-                                    <td><?= Html::a(Html::encode($child->title), '#') ?></td>
+                                    <td><?= Html::a(Html::encode($child->title), $section->getUrl()) ?></td>
                                     <td></td>
                                 </tr>
                             <?php endforeach; ?>
