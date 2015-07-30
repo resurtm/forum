@@ -9,4 +9,12 @@ use yii\db\ActiveQuery;
  */
 class SectionQuery extends ActiveQuery
 {
+    /**
+     * Adds condition which filters only root sections.
+     * @return SectionQuery
+     */
+    public function roots()
+    {
+        return $this->andWhere(['section_id' => null]);
+    }
 }
