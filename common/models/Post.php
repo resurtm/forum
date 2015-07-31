@@ -4,6 +4,7 @@ namespace common\models;
 
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use yii\helpers\Url;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\SluggableBehavior;
 
@@ -22,6 +23,8 @@ use yii\behaviors\SluggableBehavior;
  *
  * @property integer $created_at
  * @property integer $updated_at
+ *
+ * @property string $url to this post.
  */
 class Post extends ActiveRecord
 {
@@ -50,5 +53,19 @@ class Post extends ActiveRecord
     public function getSection()
     {
         return $this->hasOne(Section::className(), ['id' => 'section_id']);
+    }
+
+    /**
+     * Generates URL to this post.
+     * @return string URL to this post.
+     */
+    public function getUrl()
+    {
+        return Url::toRoute([
+            'post/view',
+            'parentSectionId' => $this->section->parent->id, 'parentSectionSlug' => $this->section->parent->slug,
+            'childSectionId' => $this->section->id, 'childSectionSlug' => $this->section->slug,
+            'id' => $this->id, 'slug' => $this->slug,
+        ]);
     }
 }

@@ -32,6 +32,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<parentSectionId:\d+>-<parentSectionSlug:[\w\-]+>/<childSectionId:\d+>-<childSectionSlug:[\w\-]+>/<id:\d+>-<slug:[\w\-]+>' => 'post/view',
                 '<parentId:\d+>-<parentSlug:[\w\-]+>/<id:\d+>-<slug:[\w\-]+>' => 'section/view',
                 '<id:\d+>-<slug:[\w\-]+>' => 'section/view',
             ],

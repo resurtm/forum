@@ -4,7 +4,9 @@
 /** @var $key mixed */
 /** @var $index integer */
 /** @var $widget yii\widgets\ListView */
+
+use yii\helpers\Html;
 ?>
 <tr>
-    <td><?= $model->title ?></td>
+    <td><?= Html::a(Html::encode($model->title), $model->getUrl()) ?></td>
 </tr>
