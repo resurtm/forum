@@ -22,6 +22,8 @@ use yii\behaviors\SluggableBehavior;
  * @property Section $parent
  * @property Section[] $children
  *
+ * @property Post[] $posts
+ *
  * @property string $url to this section.
  */
 class Section extends ActiveRecord
@@ -51,6 +53,14 @@ class Section extends ActiveRecord
     public function getChildren()
     {
         return $this->hasMany(Section::className(), ['section_id' => 'id'])->inverseOf('parent');
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getPosts()
+    {
+        return $this->hasMany(Post::className(), ['section_id' => 'id']);
     }
 
     /**
