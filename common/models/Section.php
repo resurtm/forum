@@ -5,6 +5,7 @@ namespace common\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
+use yii\db\Query;
 use yii\helpers\Url;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -28,6 +29,11 @@ use yii\behaviors\SluggableBehavior;
  */
 class Section extends ActiveRecord
 {
+    /**
+     * @var integer
+     */
+    public $postCount;
+
     /**
      * @inheritdoc
      */
@@ -69,6 +75,41 @@ class Section extends ActiveRecord
     public static function find()
     {
         return new SectionQuery(get_called_class());
+    }
+
+    public static function findRoots()
+    {
+        /** @var Section[] $sections */
+        $sections = static::find()
+            ->with([
+                'children' => function ($q) { $q->indexBy('id'); },
+            ])
+            ->where(['section_id' => null])
+            ->orderBy('title')
+            ->all();
+
+        $ids = [];
+        foreach ($sections as $section) {
+            $ids = array_merge($ids, array_keys($section->children));
+        }
+
+        $query = new Query();
+        $counts = $query->select('COUNT(id)')
+            ->from(Post::tableName())
+            ->where(['section_id' => $ids])
+            ->groupBy('section_id')
+            ->indexBy('section_id')
+            ->column(static::getDb());
+
+        foreach ($sections as $section) {
+            $section->postCount = 0;
+            foreach ($section->children as $id => $child) {
+                $child->postCount = isset($counts[$id]) ? $counts[$id] : 0;
+                $section->postCount += $child->postCount;
+            }
+        }
+
+        return $sections;
     }
 
     /**

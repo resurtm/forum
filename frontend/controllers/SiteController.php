@@ -69,11 +69,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         /** @var Section[] $sections */
-        $sections = Section::find()
-            ->roots()
-            ->orderBy('title')
-            ->with('children')
-            ->all();
+        $sections = Section::findRoots();
 
         return $this->render('index', ['sections' => $sections]);
     }

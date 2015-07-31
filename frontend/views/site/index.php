@@ -18,8 +18,8 @@ $this->title = 'Forum';
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th></th>
+                                <th style="width: 60%;">Title</th>
+                                <th style="width: 40%;">Post count</th>
                             </tr>
                         </thead>
 
@@ -27,7 +27,7 @@ $this->title = 'Forum';
                             <?php foreach ($section->children as $child): ?>
                                 <tr>
                                     <td><?= Html::a(Html::encode($child->title), $child->getUrl()) ?></td>
-                                    <td></td>
+                                    <td><?= Yii::t('app', '{n, plural, =0{No posts} =1{One post} other{# posts}}', ['n' => $child->postCount]) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
