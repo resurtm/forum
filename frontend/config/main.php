@@ -32,7 +32,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<id:\d+>-<slug:[\w\-]+>/<childId:\d+>-<childSlug:[\w\-]+>' => 'section/view',
+                '<parentId:\d+>-<parentSlug:[\w\-]+>/<id:\d+>-<slug:[\w\-]+>' => 'section/view',
                 '<id:\d+>-<slug:[\w\-]+>' => 'section/view',
             ],
         ],
