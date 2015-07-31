@@ -15,6 +15,15 @@ class SectionQuery extends ActiveQuery
      */
     public function roots()
     {
-        return $this->andWhere(['section_id' => null]);
+        return $this->andWhere('section_id IS NULL');
+    }
+
+    /**
+     * Adds condition which filters only non-root children sections.
+     * @return SectionQuery
+     */
+    public function children()
+    {
+        return $this->andWhere('section_id IS NOT NULL');
     }
 }
