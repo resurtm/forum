@@ -6,6 +6,7 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use yii\db\Query;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -110,6 +111,14 @@ class Section extends ActiveRecord
         }
 
         return $sections;
+    }
+
+    public function findPosts()
+    {
+        return new ActiveDataProvider([
+            'query' => Post::find()->where(['section_id' => $this->id]),
+            'pagination' => ['pageSize' => 12],
+        ]);
     }
 
     /**

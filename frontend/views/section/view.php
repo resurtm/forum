@@ -1,8 +1,10 @@
 <?php
 /** @var $this yii\web\View */
 /** @var $section common\models\Section */
+/** @var $posts yii\data\ActiveDataProvider */
 
 use yii\helpers\Html;
+use yii\widgets\ListView;
 
 if ($section->parent === null) {
     $this->title = $section->title;
@@ -15,4 +17,12 @@ if ($section->parent === null) {
 ?>
 <div class="section-view">
     <h1><?= Html::encode($this->title) ?></h1>
+
+    <?= ListView::widget([
+        'dataProvider' => $posts,
+        'itemView' => '/post/_item',
+        'layout' => '{items}<tr><td>{pager}</td></tr>',
+        'options' => ['tag' => 'table', 'class' => 'table'],
+        'itemOptions' => ['tag' => false],
+    ]) ?>
 </div>

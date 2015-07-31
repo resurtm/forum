@@ -16,10 +16,14 @@ class SectionController extends Controller
             ->with('parent')
             ->one();
 
-        if ($section === null || $parentId !== null && $parentSlug !== null && ($section->parent->id != $parentId || $section->parent->slug != $parentSlug)) {
+        if ($section === null || $parentId !== null && $parentSlug !== null &&
+            ($section->parent->id != $parentId || $section->parent->slug != $parentSlug)) {
             throw new HttpException(404, 'Cannot find the requested section.');
         }
 
-        return $this->render('view', ['section' => $section]);
+        return $this->render('view', [
+            'section' => $section,
+            'posts' => $section->findPosts(),
+        ]);
     }
 }
