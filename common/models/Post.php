@@ -6,6 +6,7 @@ use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 use yii\helpers\Url;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\SluggableBehavior;
 
 /**
@@ -40,6 +41,7 @@ class Post extends ActiveRecord
     {
         return [
             TimestampBehavior::className(),
+            ['class' => BlameableBehavior::className(), 'createdByAttribute' => 'author_id', 'updatedByAttribute' => false],
             ['class' => SluggableBehavior::className(), 'attribute' => 'title'],
         ];
     }
