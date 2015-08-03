@@ -10,7 +10,10 @@ $this->title = 'Forum';
     <?php foreach ($sections as $section): ?>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><?= Html::a(Html::encode($section->title), $section->getUrl()) ?></h3>
+                <h3 class="panel-title">
+                    <?= Html::a(Html::encode($section->title), $section->getUrl()) ?>
+                    (<?= Yii::t('app', '{n, plural, =0{no posts} =1{one post} other{# posts}}', ['n' => $section->postCount]) ?>)
+                </h3>
             </div>
 
             <?php if (count($section->children) > 0): ?>
