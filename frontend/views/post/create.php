@@ -20,7 +20,13 @@ $this->registerJsVariable(
 <div class="post-create">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(['id' => 'post-create-form']); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'post-create-form',
+        'enableClientValidation' => false,
+        'enableAjaxValidation' => true,
+        'validateOnChange' => false,
+        'validateOnBlur' => false,
+    ]); ?>
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($post, 'title') ?>

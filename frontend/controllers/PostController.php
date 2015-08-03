@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use Yii;
+use yii\web\Response;
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\widgets\ActiveForm;
 use common\models\Post;
 use common\models\Section;
 
@@ -30,6 +32,11 @@ class PostController extends Controller
     public function actionCreate()
     {
         $post = new Post();
+
+        if (Yii::$app->getRequest()->getIsAjax() && $post->load(Yii::$app->request->post())) {
+            Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($post);
+        }
 
         if ($post->load(Yii::$app->getRequest()->post()) && $post->save()) {
             return $this->redirect($post->getUrl());
