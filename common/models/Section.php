@@ -115,8 +115,17 @@ class Section extends ActiveRecord
 
     public function findPosts()
     {
+        if ($this->section_id === null) {
+            $id = [];
+            foreach ($this->children as $child) {
+                $id[] = $child->id;
+            }
+        } else {
+            $id = $this->id;
+        }
+
         return new ActiveDataProvider([
-            'query' => Post::find()->where(['section_id' => $this->id]),
+            'query' => Post::find()->where(['section_id' => $id]),
             'pagination' => ['pageSize' => 12],
         ]);
     }
