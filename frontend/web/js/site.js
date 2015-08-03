@@ -16,7 +16,7 @@ jQuery(function ($) {
 
                 if (Object.keys(data).length > 0) {
                     for (var id in data) {
-                        section.append('<option id="' + id + '">' + data[id] + '</option>');
+                        section.append('<option value="' + id + '">' + data[id] + '</option>');
                     }
                 }
             }
