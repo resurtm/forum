@@ -18,6 +18,10 @@ if ($section->parent === null) {
 <div class="section-view">
     <h1><?= Html::encode($section->title) ?></h1>
 
+    <?php if ($section->section_id === null): ?>
+        <?= $this->render('/section/_item', ['section' => $section]) ?>
+    <?php endif; ?>
+
     <?= ListView::widget([
         'dataProvider' => $posts,
         'itemView' => '/post/_item',
