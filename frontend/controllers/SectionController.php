@@ -2,9 +2,10 @@
 
 namespace frontend\controllers;
 
+use Yii;
+use yii\web\Response;
 use yii\web\Controller;
 use yii\web\HttpException;
-use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use common\models\Section;
 
@@ -36,6 +37,7 @@ class SectionController extends Controller
             ->orderBy('title')
             ->all();
 
-        return Json::encode(ArrayHelper::map($sections, 'id', 'title'));
+        Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+        return ArrayHelper::map($sections, 'id', 'title');
     }
 }
