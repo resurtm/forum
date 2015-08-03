@@ -37,6 +37,9 @@ return [
                 '<id:\d+>-<slug:[\w\-]+>' => 'section/view',
             ],
         ],
+        'view' => [
+            'class' => 'frontend\components\View',
+        ],
     ],
     'params' => $params,
 ];
