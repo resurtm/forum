@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use yii\web\Controller;
 use yii\web\HttpException;
+use yii\helpers\Json;
+use yii\helpers\ArrayHelper;
 use common\models\Section;
 
 class SectionController extends Controller
@@ -25,5 +27,15 @@ class SectionController extends Controller
             'section' => $section,
             'posts' => $section->findPosts(),
         ]);
+    }
+
+    public function actionChildren($id)
+    {
+        $sections = Section::find()
+            ->where(['section_id' => $id])
+            ->orderBy('title')
+            ->all();
+
+        return Json::encode(ArrayHelper::map($sections, 'id', 'title'));
     }
 }
