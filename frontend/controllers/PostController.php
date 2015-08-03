@@ -22,6 +22,6 @@ class PostController extends Controller
             throw new HttpException(404, 'Cannot find the requested post.');
         }
 
-        return $this->render('view');
+        return $this->render('view', ['post' => $post]);
     }
 }

@@ -16,7 +16,7 @@ if ($section->parent === null) {
 }
 ?>
 <div class="section-view">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($section->title) ?></h1>
 
     <?= ListView::widget([
         'dataProvider' => $posts,
