@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use Yii;
 use yii\web\Controller;
 use yii\web\HttpException;
 use common\models\Post;
@@ -23,5 +24,16 @@ class PostController extends Controller
         }
 
         return $this->render('view', ['post' => $post]);
+    }
+
+    public function actionCreate()
+    {
+        $post = new Post();
+
+        if ($post->load(Yii::$app->getRequest()->post()) && $post->save()) {
+            return $this->redirect($post->getUrl());
+        } else {
+            return $this->render('create', ['post' => $post]);
+        }
     }
 }
