@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\HttpException;
 use common\models\Post;
+use common\models\Section;
 
 class PostController extends Controller
 {
@@ -33,7 +34,15 @@ class PostController extends Controller
         if ($post->load(Yii::$app->getRequest()->post()) && $post->save()) {
             return $this->redirect($post->getUrl());
         } else {
-            return $this->render('create', ['post' => $post]);
+            $rootSections = Section::find()
+                ->roots()
+                ->orderBy('title')
+                ->all();
+
+            return $this->render('create', [
+                'post' => $post,
+                'rootSections' => $rootSections,
+            ]);
         }
     }
 }
