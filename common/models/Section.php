@@ -125,7 +125,9 @@ class Section extends ActiveRecord
         }
 
         return new ActiveDataProvider([
-            'query' => Post::find()->where(['section_id' => $id]),
+            'query' => Post::find()
+                ->where(['section_id' => $id])
+                ->orderBy('updated_at DESC'),
             'pagination' => ['pageSize' => 12],
         ]);
     }
