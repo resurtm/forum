@@ -29,6 +29,11 @@ use yii\behaviors\SluggableBehavior;
 class Post extends ActiveRecord
 {
     /**
+     * @var integer
+     */
+    public $rootSectionId;
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -36,6 +41,26 @@ class Post extends ActiveRecord
         return [
             TimestampBehavior::className(),
             ['class' => SluggableBehavior::className(), 'attribute' => 'title'],
+        ];
+    }
+
+    public function rules()
+    {
+        return [
+            ['title', 'filter', 'filter' => 'trim'],
+            ['title', 'required'],
+            ['title', 'string', 'min' => 5, 'max' => 100],
+            ['title', 'unique', 'message' => 'Post with this title already exists.'],
+
+            ['text', 'filter', 'filter' => 'trim'],
+            ['text', 'required'],
+            ['text', 'string', 'min' => 10, 'max' => 10000],
+
+            ['rootSectionId', 'required'],
+            ['rootSectionId', 'exist', 'targetClass' => Section::className(), 'targetAttribute' => 'id'],
+
+            ['section_id', 'required'],
+            ['section_id', 'exist', 'targetClass' => Section::className(), 'targetAttribute' => 'id'],
         ];
     }
 
