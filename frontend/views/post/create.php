@@ -8,9 +8,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\Url;
-use yii\web\View;
 
-$this->title = 'Create new post';
+$this->title = $post->getIsNewRecord() ? 'Create new post' : 'Update post';
 
 $this->registerJsVariable(
     'sectionChildrenUrl',
