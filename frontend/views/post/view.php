@@ -3,7 +3,6 @@
 /** @var $post common\models\Post */
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
 
 $this->title = $post->title;
 $this->params['breadcrumbs'][] = ['label' => $post->section->parent->title, 'url' => $post->section->parent->getUrl()];
