@@ -1,5 +1,8 @@
 language: php
 
+notifications:
+  email: false
+
 php:
   - 5.4
   - 5.5
@@ -43,8 +46,13 @@ before_script:
 
   - mysql -e 'CREATE DATABASE `forum-tests`;';
 
+  - php -S 127.0.0.1:8080 &
+
 script:
   - cd ./tests
   - ./codeception/bin/yii migrate --interactive=0
   - codecept build
   - codecept run
+
+after_script:
+  - killall php
