@@ -46,6 +46,16 @@ class Post extends ActiveRecord
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'title' => 'New post title',
+            'text' => 'Your post text',
+            'rootSectionId' => 'Primary section',
+            'section_id' => 'Secondary section',
+        ];
+    }
+
     public function rules()
     {
         return [
