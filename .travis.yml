@@ -40,7 +40,7 @@ install:
 
   - export GOPATH="$HOME/go"
   - export PATH="$GOPATH/bin:$PATH"
-  - travis_retry go get github.com/beberlei/hhvm-serve
+  - travis_retry go get github.com/Naktibalda/hhvm-serve
 
   - ./init --env=Development --overwrite=y
 
