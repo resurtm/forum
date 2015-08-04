@@ -39,7 +39,7 @@ before_script:
   - php -r "echo INTL_ICU_VERSION . \"\n\";"
   - mysql --version
 
-  - mysql -e 'CREATE DATABASE "forum-tests";';
+  - mysql -e 'CREATE DATABASE `forum-tests`;';
 
 script:
   - cd ./tests
