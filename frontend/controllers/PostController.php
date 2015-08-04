@@ -45,7 +45,7 @@ class PostController extends Controller
         }
 
         if ($post->load(Yii::$app->getRequest()->post()) && $post->save()) {
-            return $this->redirect($post->getUrl());
+            return $this->redirect(Post::findOne($id)->getUrl());
         } else {
             $rootSections = Section::find()
                 ->roots()
