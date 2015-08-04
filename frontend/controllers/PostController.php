@@ -51,10 +51,17 @@ class PostController extends Controller
                 ->roots()
                 ->orderBy('title')
                 ->all();
+            $mainSections = $post->rootSectionId === null
+                ? []
+                : Section::find()
+                    ->where(['section_id' => $post->rootSectionId])
+                    ->orderBy('title')
+                    ->all();
 
             return $this->render('create', [
                 'post' => $post,
                 'rootSections' => $rootSections,
+                'mainSections' => $mainSections,
             ]);
         }
     }

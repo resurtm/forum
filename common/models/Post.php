@@ -105,4 +105,11 @@ class Post extends ActiveRecord
             'id' => $this->id, 'slug' => $this->slug,
         ]);
     }
+
+    public function afterFind()
+    {
+        parent::afterFind();
+
+        $this->rootSectionId = $this->section->section_id;
+    }
 }

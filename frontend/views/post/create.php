@@ -2,6 +2,7 @@
 /** @var $this frontend\components\View */
 /** @var $post common\models\Post */
 /** @var $rootSections common\models\Section[] */
+/** @var $mainSections common\models\Section[] */
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
@@ -41,7 +42,7 @@ $this->registerJsVariable(
             <div class="col-md-3">
                 <?= $form
                     ->field($post, 'section_id')
-                    ->dropDownList([], ['disabled' => true, 'autocomplete' => 'off']) ?>
+                    ->dropDownList(ArrayHelper::map($mainSections, 'id', 'title'), ['disabled' => empty($mainSections), 'autocomplete' => 'off']) ?>
             </div>
         </div>
 
