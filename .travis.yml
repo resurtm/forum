@@ -38,6 +38,9 @@ install:
   - travis_retry composer global require "codeception/specify=*"
   - travis_retry composer global require "codeception/verify=*"
 
+  - travis_retry go get github.com/beberlei/hhvm-serve
+  - export PATH="$GOPATH/bin:$PATH"
+
   - ./init --env=Development --overwrite=y
 
 before_script:
