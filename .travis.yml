@@ -35,7 +35,7 @@ install:
   - travis_retry composer global require "codeception/specify=*"
   - travis_retry composer global require "codeception/verify=*"
 
-  - init --env=Development --overwrite=y
+  - ./init --env=Development --overwrite=y
 
 before_script:
   - php -r "echo INTL_ICU_VERSION . \"\n\";"
