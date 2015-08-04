@@ -29,9 +29,15 @@ class PostController extends Controller
         return $this->render('view', ['post' => $post]);
     }
 
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
-        $post = new Post();
+        if ($id === null) {
+            $post = new Post();
+        } else {
+            if (($post = Post::findOne(['id' => $id, 'author_id' => Yii::$app->getUser()->getId()])) === null) {
+                throw new HttpException(404, 'Cannot find the requested post.');
+            }
+        }
 
         if (Yii::$app->getRequest()->getIsAjax() && $post->load(Yii::$app->request->post())) {
             Yii::$app->getResponse()->format = Response::FORMAT_JSON;
@@ -51,5 +57,10 @@ class PostController extends Controller
                 'rootSections' => $rootSections,
             ]);
         }
+    }
+
+    public function actionUpdate($id)
+    {
+        return $this->actionCreate($id);
     }
 }
