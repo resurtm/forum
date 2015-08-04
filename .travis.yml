@@ -52,7 +52,7 @@ before_script:
 
   - |
     if [ $TRAVIS_PHP_VERSION = 'hhvm' ] || [ $TRAVIS_PHP_VERSION = 'hhvm-nightly' ]; then
-      hhvm-serve --listen=127.0.0.1:8080 &
+      hhvm-serve --document-root=. --listen=127.0.0.1:8080 &
     else
       php -S 127.0.0.1:8080 &
     fi
