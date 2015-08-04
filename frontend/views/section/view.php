@@ -25,7 +25,9 @@ if ($section->parent === null) {
     <?= ListView::widget([
         'dataProvider' => $posts,
         'itemView' => '/post/_item',
-        'layout' => '{items}<tr><td>{pager}</td></tr>',
+        'layout' => '<tr><td>Title</td><td></td><td>Created</td><td>Updated</td></tr>' .
+            '{items}' .
+            '<tr><td colspan="4">{pager}</td></tr>',
         'options' => ['tag' => 'table', 'class' => 'table'],
         'itemOptions' => ['tag' => false],
     ]) ?>
