@@ -17,6 +17,7 @@ class AdjacencyListComment extends Comment
         $comments = static::find()
             ->select(['id', 'parent_id', 'author_id', 'text', 'created_at'])
             ->where(['post_id' => $postId])
+            ->orderBy('created_at DESC')
             ->asArray()
             ->all();
 
@@ -27,7 +28,7 @@ class AdjacencyListComment extends Comment
         return $root['children'];
     }
 
-    private static function prepareComments(&$parentNode, &$comments)
+    private static function prepareComments(&$parentNode, &$comments, $level = 1)
     {
         foreach ($comments as $i => &$childNode) {
             if (is_integer($childNode['id'])) {
@@ -38,7 +39,7 @@ class AdjacencyListComment extends Comment
             }
             if ($parentNode['id'] == $childNode['parent_id']) {
                 $parentNode['children'][] = &$childNode;
-
+                $childNode['level'] = $level;
                 $childNode['id'] = (integer)$childNode['id'];
                 $childNode['parent_id'] = (integer)$childNode['parent_id'];
                 $childNode['author_id'] = (integer)$childNode['author_id'];
@@ -46,7 +47,7 @@ class AdjacencyListComment extends Comment
             }
         }
         foreach ($parentNode['children'] as $i => &$childNode) {
-            static::prepareComments($childNode, $comments);
+            static::prepareComments($childNode, $comments, $level + 1);
         }
     }
 }
