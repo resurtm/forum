@@ -2,20 +2,32 @@
 
 namespace common\models\comments;
 
+use yii\base\Exception;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
 
 abstract class Comment extends ActiveRecord
 {
-    public static function instantiate($row)
+    public static function commentClassName()
     {
-        return new AdjacencyListComment();
+        return AdjacencyListComment::className();
     }
 
+    public static function instantiate($row)
+    {
+        $className = static::commentClassName();
+        return new $className();
+    }
+
+    /**
+     * @param mixed[] $config
+     * @return Comment
+     */
     public static function create($config = [])
     {
-        return new AdjacencyListComment($config);
+        $className = static::commentClassName();
+        return new $className($config);
     }
 
     /**
@@ -36,5 +48,15 @@ abstract class Comment extends ActiveRecord
             ['text', 'required'],
             ['text', 'string', 'min' => 5, 'max' => 10000],
         ];
+    }
+
+    public static function findByPostInternal($postId)
+    {
+        throw new Exception('Method is not implemented');
+    }
+
+    public static function findByPost($postId)
+    {
+        return call_user_func([static::commentClassName(), 'findByPostInternal'], $postId);
     }
 }

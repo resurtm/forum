@@ -38,7 +38,13 @@ class PostController extends Controller
             return $this->refresh();
         }
 
-        return $this->render('view', ['post' => $post, 'comment' => $comment]);
+        $comments = Comment::findByPost($post->id);
+
+        return $this->render('view', [
+            'post' => $post,
+            'comment' => $comment,
+            'comments' => $comments,
+        ]);
     }
 
     public function actionCreate($id = null)
