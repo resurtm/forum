@@ -34,7 +34,7 @@ abstract class Comment extends ActiveRecord
         return [
             ['text', 'filter', 'filter' => 'trim'],
             ['text', 'required'],
-            ['text', 'string', 'min' => 10, 'max' => 10000],
+            ['text', 'string', 'min' => 5, 'max' => 10000],
         ];
     }
 }
