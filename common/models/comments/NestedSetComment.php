@@ -2,10 +2,12 @@
 
 namespace common\models\comments;
 
-use yii\base\Exception;
+use yii\db\Query;
 
 class NestedSetComment extends Comment
 {
+    public $parent_id;
+
     /**
      * @inheritdoc
      */
@@ -16,6 +18,43 @@ class NestedSetComment extends Comment
 
     public static function findByPostInternal($postId)
     {
-        throw new Exception('Method is not implemented');
+        return [];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        $query = new Query();
+        $query
+            ->select('COUNT(*)')
+            ->where(['post_id' => $this->post_id])
+            ->from(static::tableName());
+        $count = $query->scalar($this->getDb());
+
+        if ($count == 0) {
+            $this->left = 1;
+            $this->right = 2;
+            $this->level = 1;
+        } else {
+            if (empty($this->parent_id)) {
+                $query = new Query();
+                $query
+                    ->select('MAX({{right}})')
+                    ->where(['post_id' => $this->post_id])
+                    ->from(static::tableName());
+                $maxRight = $query->scalar($this->getDb());
+
+                $this->left = $maxRight + 1;
+                $this->right = $maxRight + 2;
+                $this->level = 1;
+            } else {
+
+            }
+        }
+
+        return true;
     }
 }
