@@ -47,6 +47,9 @@ abstract class Comment extends ActiveRecord
             ['text', 'filter', 'filter' => 'trim'],
             ['text', 'required'],
             ['text', 'string', 'min' => 5, 'max' => 10000],
+
+            ['parent_id', 'required'],
+            ['parent_id', 'exist', 'targetAttribute' => 'id'],
         ];
     }
 
