@@ -11,8 +11,8 @@ abstract class Comment extends ActiveRecord
         return new AdjacencyListComment();
     }
 
-    public static function create()
+    public static function create($config = [])
     {
-        return new AdjacencyListComment();
+        return new AdjacencyListComment($config);
     }
 }
