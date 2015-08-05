@@ -27,8 +27,16 @@ class PostController extends Controller
             throw new HttpException(404, 'Cannot find the requested post.');
         }
 
-        $commentClass = Comment::className();
-        $comment = new $commentClass();
+        $comment = Comment::create(['post_id' => $post->id]);
+
+        if (Yii::$app->getRequest()->getIsAjax() && $comment->load(Yii::$app->getRequest()->post())) {
+            Yii::$app->getResponse()->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($comment);
+        }
+
+        if ($comment->load(Yii::$app->getRequest()->post()) && $comment->save()) {
+            return $this->refresh();
+        }
 
         return $this->render('view', ['post' => $post, 'comment' => $comment]);
     }
@@ -43,31 +51,31 @@ class PostController extends Controller
             }
         }
 
-        if (Yii::$app->getRequest()->getIsAjax() && $post->load(Yii::$app->request->post())) {
+        if (Yii::$app->getRequest()->getIsAjax() && $post->load(Yii::$app->getRequest()->post())) {
             Yii::$app->getResponse()->format = Response::FORMAT_JSON;
             return ActiveForm::validate($post);
         }
 
         if ($post->load(Yii::$app->getRequest()->post()) && $post->save()) {
             return $this->redirect(Post::findOne($id)->getUrl());
-        } else {
-            $rootSections = Section::find()
-                ->roots()
+        }
+
+        $rootSections = Section::find()
+            ->roots()
+            ->orderBy('title')
+            ->all();
+        $mainSections = $post->rootSectionId === null
+            ? []
+            : Section::find()
+                ->where(['section_id' => $post->rootSectionId])
                 ->orderBy('title')
                 ->all();
-            $mainSections = $post->rootSectionId === null
-                ? []
-                : Section::find()
-                    ->where(['section_id' => $post->rootSectionId])
-                    ->orderBy('title')
-                    ->all();
 
-            return $this->render('create', [
-                'post' => $post,
-                'rootSections' => $rootSections,
-                'mainSections' => $mainSections,
-            ]);
-        }
+        return $this->render('create', [
+            'post' => $post,
+            'rootSections' => $rootSections,
+            'mainSections' => $mainSections,
+        ]);
     }
 
     public function actionUpdate($id)

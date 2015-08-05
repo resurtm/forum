@@ -1,6 +1,6 @@
 <?php
 /** @var $this yii\web\View */
-/** @var $comment common\models\comments\AdjacencyListComment|common\models\comments\NestedSetComment */
+/** @var $comment common\models\comments\Comment */
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
