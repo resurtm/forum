@@ -17,7 +17,7 @@ class AdjacencyListComment extends Comment
         $comments = static::find()
             ->select(['id', 'parent_id', 'author_id', 'text', 'created_at'])
             ->where(['post_id' => $postId])
-            ->orderBy('created_at DESC')
+            ->orderBy('created_at ASC')
             ->asArray()
             ->all();
 
