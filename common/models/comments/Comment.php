@@ -6,7 +6,7 @@ use yii\db\ActiveQuery;
 
 abstract class Comment
 {
-    private static function childClassName()
+    public static function className()
     {
         return AdjacencyListComment::className();
     }
@@ -16,6 +16,6 @@ abstract class Comment
      */
     public static function find()
     {
-        return call_user_func([static::childClassName(), 'find']);
+        return call_user_func([static::className(), 'find']);
     }
 }
