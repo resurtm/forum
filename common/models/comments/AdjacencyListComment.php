@@ -2,9 +2,7 @@
 
 namespace common\models\comments;
 
-use yii\db\ActiveRecord;
-
-class AdjacencyListComment extends ActiveRecord
+class AdjacencyListComment extends Comment
 {
     /**
      * @inheritdoc

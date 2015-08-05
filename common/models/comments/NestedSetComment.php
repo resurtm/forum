@@ -2,9 +2,7 @@
 
 namespace common\models\comments;
 
-use yii\db\ActiveRecord;
-
-class NestedSetComment extends ActiveRecord
+class NestedSetComment extends Comment
 {
     /**
      * @inheritdoc

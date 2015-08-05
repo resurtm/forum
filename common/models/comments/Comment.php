@@ -2,20 +2,17 @@
 
 namespace common\models\comments;
 
-use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
-abstract class Comment
+abstract class Comment extends ActiveRecord
 {
-    public static function className()
+    public static function instantiate($row)
     {
-        return AdjacencyListComment::className();
+        return new AdjacencyListComment();
     }
 
-    /**
-     * @return ActiveQuery
-     */
-    public static function find()
+    public static function create()
     {
-        return call_user_func([static::className(), 'find']);
+        return new AdjacencyListComment();
     }
 }
