@@ -18,7 +18,19 @@ class NestedSetComment extends Comment
 
     public static function findByPostInternal($postId)
     {
-        return [];
+        $query = new Query();
+        $query
+            ->select(['node.id', 'node.text', 'node.level'])
+            ->from([static::tableName() . ' node', static::tableName() . ' parent'])
+            ->where('node.left BETWEEN parent.{{left}} AND parent.{{right}}')
+            //->andWhere('parent.id = 1')
+            ->andWhere('node.post_id = :pid AND parent.post_id = :pid', [':pid' => $postId])
+            ->orderBy('node.{{left}}');
+        $comments = $query->all(static::getDb());
+        foreach ($comments as &$comment) {
+            $comment['children'] = [];
+        }
+        return $comments;
     }
 
     public function beforeSave($insert)
@@ -32,7 +44,7 @@ class NestedSetComment extends Comment
             ->select('COUNT(*)')
             ->where(['post_id' => $this->post_id])
             ->from(static::tableName());
-        $count = $query->scalar($this->getDb());
+        $count = $query->scalar(static::getDb());
 
         if ($count == 0) {
             $this->left = 1;
@@ -45,7 +57,7 @@ class NestedSetComment extends Comment
                     ->select('MAX({{right}})')
                     ->where(['post_id' => $this->post_id])
                     ->from(static::tableName());
-                $maxRight = $query->scalar($this->getDb());
+                $maxRight = $query->scalar(static::getDb());
 
                 $this->left = $maxRight + 1;
                 $this->right = $maxRight + 2;
