@@ -51,7 +51,7 @@ $this->registerJsVariable(
                 <?= $form->field($post, 'text')->textarea(['rows' => 10]) ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Create', ['class' => 'btn btn-danger', 'name' => 'signup-button']) ?>
+                    <?= Html::submitButton('Create', ['class' => 'btn btn-danger']) ?>
                 </div>
             </div>
         </div>
