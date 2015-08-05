@@ -9,6 +9,7 @@ use yii\web\HttpException;
 use yii\widgets\ActiveForm;
 use common\models\Post;
 use common\models\Section;
+use common\models\comments\Comment;
 
 class PostController extends Controller
 {
@@ -26,7 +27,10 @@ class PostController extends Controller
             throw new HttpException(404, 'Cannot find the requested post.');
         }
 
-        return $this->render('view', ['post' => $post]);
+        $commentClass = Comment::className();
+        $comment = new $commentClass();
+
+        return $this->render('view', ['post' => $post, 'comment' => $comment]);
     }
 
     public function actionCreate($id = null)

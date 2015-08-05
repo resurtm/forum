@@ -1,0 +1,23 @@
+<?php
+/** @var $this yii\web\View */
+/** @var $comment common\models\comments\AdjacencyListComment|common\models\comments\NestedSetComment */
+
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+?>
+<?php $form = ActiveForm::begin([
+    'id' => 'comment-create-form',
+    'enableClientValidation' => false,
+    'enableAjaxValidation' => true,
+    'validateOnChange' => false,
+    'validateOnBlur' => false,
+]); ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($comment, 'text')->textarea() ?>
+            <div class="form-group">
+                <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
+            </div>
+        </div>
+    </div>
+<?php ActiveForm::end(); ?>
