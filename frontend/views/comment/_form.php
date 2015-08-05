@@ -13,11 +13,11 @@ use yii\helpers\Html;
     'validateOnBlur' => false,
 ]); ?>
     <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($comment, 'text')->textarea() ?>
-            <div class="form-group">
-                <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
-            </div>
+    <div class="col-md-5">
+        <?= $form->field($comment, 'text', ['enableLabel' => false])->textarea() ?>
+        <div class="form-group">
+            <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
         </div>
+    </div>
     </div>
 <?php ActiveForm::end(); ?>
