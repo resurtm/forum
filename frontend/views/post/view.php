@@ -2,6 +2,7 @@
 /** @var $this yii\web\View */
 /** @var $post common\models\Post */
 /** @var $comment common\models\comments\Comment */
+/** @var $comments mixed[][] */
 
 use yii\helpers\Html;
 
@@ -15,5 +16,8 @@ $this->params['breadcrumbs'][] = $post->title;
     <p><?= Yii::$app->getFormatter()->asNtext($post->text) ?></p>
 
     <h3>Comments</h3>
+    <?php foreach ($comments as $item): ?>
+        <?= $this->render('/comment/_item', ['comment' => $item]) ?>
+    <?php endforeach; ?>
     <?= $this->render('/comment/_form', ['comment' => $comment]) ?>
 </div>
