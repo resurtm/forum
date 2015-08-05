@@ -16,7 +16,7 @@ use yii\helpers\Html;
         'validateOnChange' => false,
         'validateOnBlur' => false,
     ]); ?>
-        <?= $form->field($comment, 'parent_id', ['enableLabel' => false])->hiddenInput(['class' => 'parent']) ?>
+        <?= $form->field($comment, 'parent_id', ['enableLabel' => false, 'enableError' => false])->hiddenInput(['class' => 'parent']) ?>
         <?= $form->field($comment, 'text', ['enableLabel' => false])->textarea(['rows' => 5]) ?>
         <div class="form-group">
             <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
