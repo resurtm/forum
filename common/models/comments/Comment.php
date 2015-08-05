@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\comment;
+namespace common\models\comments;
 
 use yii\db\ActiveQuery;
 

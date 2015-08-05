@@ -1,16 +1,16 @@
 <?php
 
-namespace common\models\comment;
+namespace common\models\comments;
 
 use yii\db\ActiveRecord;
 
-class NestedSetComment extends ActiveRecord
+class AdjacencyListComment extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%comment_ns}}';
+        return '{{%comment_al}}';
     }
 }
