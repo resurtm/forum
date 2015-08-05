@@ -5,19 +5,22 @@
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 ?>
-<?php $form = ActiveForm::begin([
-    'id' => 'comment-create-form',
-    'enableClientValidation' => false,
-    'enableAjaxValidation' => true,
-    'validateOnChange' => false,
-    'validateOnBlur' => false,
-]); ?>
-    <div class="row">
-    <div class="col-md-5">
-        <?= $form->field($comment, 'text', ['enableLabel' => false])->textarea() ?>
+<p><?= Html::a('Leave a new comment', '#', ['id' => 'create-new-comment']) ?></p>
+
+<div class="row">
+<div class="col-md-5">
+    <?php $form = ActiveForm::begin([
+        'id' => 'comment-create-form',
+        'enableClientValidation' => false,
+        'enableAjaxValidation' => true,
+        'validateOnChange' => false,
+        'validateOnBlur' => false,
+    ]); ?>
+        <?= $form->field($comment, 'parent_id', ['enableLabel' => false])->hiddenInput(['class' => 'parent']) ?>
+        <?= $form->field($comment, 'text', ['enableLabel' => false])->textarea(['rows' => 5]) ?>
         <div class="form-group">
             <?= Html::submitButton('Comment', ['class' => 'btn btn-primary']) ?>
         </div>
-    </div>
-    </div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
+</div>
+</div>
