@@ -11,7 +11,8 @@ abstract class Comment extends ActiveRecord
 {
     public static function commentClassName()
     {
-        return AdjacencyListComment::className();
+        //return AdjacencyListComment::className();
+        return NestedSetComment::className();
     }
 
     public static function instantiate($row)
@@ -48,7 +49,6 @@ abstract class Comment extends ActiveRecord
             ['text', 'required'],
             ['text', 'string', 'min' => 5, 'max' => 10000],
 
-            ['parent_id', 'required'],
             ['parent_id', 'exist', 'targetAttribute' => 'id'],
         ];
     }
