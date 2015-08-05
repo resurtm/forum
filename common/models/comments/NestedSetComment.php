@@ -66,25 +66,46 @@ class NestedSetComment extends Comment
                 $this->right = $maxRight + 2;
                 $this->level = 1;
             } else {
+//                $query = new Query();
+//                $query
+//                    ->select(['{{left}} left', '{{level}} level'])
+//                    ->where(['post_id' => $this->post_id, 'id' => $this->parent_id])
+//                    ->from(static::tableName());
+//                $data = $query->all(static::getDb());
+//
+//                static::getDb()
+//                    ->createCommand('UPDATE ' . static::tableName() . ' SET {{right}} = {{right}} + 2 WHERE {{right}} > :left')
+//                    ->bindValue(':left', $data[0]['left'])
+//                    ->execute();
+//
+//                static::getDb()
+//                    ->createCommand('UPDATE ' . static::tableName() . ' SET {{left}} = {{left}} + 2 WHERE {{left}} > :left')
+//                    ->bindValue(':left', $data[0]['left'])
+//                    ->execute();
+//
+//                $this->left = $data[0]['left'] + 1;
+//                $this->right = $data[0]['left'] + 2;
+//                $this->level = $data[0]['level'] + 1;
+
                 $query = new Query();
                 $query
-                    ->select(['{{left}} left', '{{level}} level'])
+                    ->select(['{{right}} right', '{{level}} level'])
                     ->where(['post_id' => $this->post_id, 'id' => $this->parent_id])
                     ->from(static::tableName());
                 $data = $query->all(static::getDb());
 
                 static::getDb()
-                    ->createCommand('UPDATE ' . static::tableName() . ' SET {{right}} = {{right}} + 2 WHERE {{right}} > :left')
-                    ->bindValue(':left', $data[0]['left'])
+                    ->createCommand('UPDATE ' . static::tableName() . ' SET {{right}} = {{right}} + 2 WHERE {{right}} > :right')
+                    ->bindValue(':right', $data[0]['right'])
                     ->execute();
 
                 static::getDb()
-                    ->createCommand('UPDATE ' . static::tableName() . ' SET {{left}} = {{left}} + 2 WHERE {{left}} > :left')
-                    ->bindValue(':left', $data[0]['left'])
+                    ->createCommand('UPDATE ' . static::tableName() . ' SET {{left}} = {{left}} + 2 WHERE {{left}} > :right')
+                    ->bindValue(':right', $data[0]['right'])
                     ->execute();
 
-                $this->left = $data[0]['left'] + 1;
-                $this->right = $data[0]['left'] + 2;
+                $this->left = $data[0]['right'] + 1;
+                $this->right = $data[0]['right'] + 2;
                 $this->level = $data[0]['level'] + 1;
             }
         }
