@@ -7,6 +7,7 @@ use yii\console\Controller;
 use yii\db\Connection;
 use yii\db\Query;
 use yii\helpers\Inflector;
+use yii\helpers\Console;
 use common\models\User;
 use Faker;
 
@@ -37,17 +38,9 @@ class DataController extends Controller
 
     private function generate()
     {
-        $this->stdout('Sections...');
         $this->generateSections();
-        $this->stdout(" Done!\n");
-
-        $this->stdout('Users...');
         $this->generateUsers();
-        $this->stdout(" Done!\n");
-
-        $this->stdout('Posts...');
         $this->generatePosts();
-        $this->stdout(" Done!\n");
     }
 
     private function generateSections()
@@ -76,7 +69,13 @@ class DataController extends Controller
             ],
         ];
 
+        $count = count($sections);
+        Console::startProgress(0, $count, 'Generating sections: ');
+
+        $i = 0;
         foreach ($sections as $title => $children) {
+            ++$i;
+
             $this->getDb()->createCommand()->insert('{{%section}}', [
                 'title' => $title,
                 'slug' => Inflector::slug($title),
@@ -94,11 +93,18 @@ class DataController extends Controller
                     'updated_at' => time(),
                 ])->execute();
             }
+
+            Console::updateProgress($i, $count);
         }
+
+        Console::endProgress();
     }
 
     private function generateUsers()
     {
+        $count = mt_rand(50, 100);
+        Console::startProgress(0, $count + 1, 'Generating users: ');
+
         $security = Yii::$app->getSecurity();
 
         $this->getDb()->createCommand()->insert('{{%user}}', [
@@ -110,8 +116,9 @@ class DataController extends Controller
             'created_at' => time(),
             'updated_at' => time(),
         ])->execute();
+        Console::updateProgress(1, $count + 1);
 
-        for ($i = 0; $i < mt_rand(50, 100); ++$i) {
+        for ($i = 1; $i <= $count; ++$i) {
             $this->getDb()->createCommand()->insert('{{%user}}', [
                 'username' => $this->getFaker()->userName,
                 'auth_key' => $security->generateRandomString(),
@@ -121,11 +128,17 @@ class DataController extends Controller
                 'created_at' => time(),
                 'updated_at' => time(),
             ])->execute();
+            Console::updateProgress($i + 1, $count + 1);
         }
+
+        Console::endProgress();
     }
 
     private function generatePosts()
     {
+        $count = mt_rand(300, 500);
+        Console::startProgress(0, $count, 'Generating posts: ');
+
         $sectionIds = (new Query())
             ->select('id')
             ->from('{{%section}}')
@@ -137,7 +150,7 @@ class DataController extends Controller
             ->from('{{%user}}')
             ->column($this->getDb());
 
-        for ($i = 0; $i < mt_rand(400, 1000); ++$i) {
+        for ($i = 1; $i <= $count; ++$i) {
             $title = rtrim($this->getFaker()->sentence(mt_rand(3, 10)), '.');
 
             $this->getDb()->createCommand()->insert('{{%post}}', [
@@ -152,7 +165,11 @@ class DataController extends Controller
                 'created_at' => time(),
                 'updated_at' => time(),
             ])->execute();
+
+            Console::updateProgress($i, $count);
         }
+
+        Console::endProgress();
     }
 
     private function clear()
