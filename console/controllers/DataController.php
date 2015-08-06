@@ -6,6 +6,7 @@ use Yii;
 use yii\console\Controller;
 use yii\db\Connection;
 use yii\helpers\Inflector;
+use common\models\User;
 use Faker;
 
 /**
@@ -36,6 +37,8 @@ class DataController extends Controller
     private function generate()
     {
         $this->generateSections();
+        $this->generateUsers();
+        $this->generatePosts();
     }
 
     private function generateSections()
@@ -83,6 +86,37 @@ class DataController extends Controller
                 ])->execute();
             }
         }
+    }
+
+    private function generateUsers()
+    {
+        $security = Yii::$app->getSecurity();
+
+        $this->getDb()->createCommand()->insert('{{%user}}', [
+            'username' => 'resurtm',
+            'auth_key' => $security->generateRandomString(),
+            'password_hash' => $security->generatePasswordHash('123123'),
+            'email' => 'resurtm@gmail.com',
+            'status' => User::STATUS_ACTIVE,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ])->execute();
+
+        for ($i = 0; $i < mt_rand(100, 200); ++$i) {
+            $this->getDb()->createCommand()->insert('{{%user}}', [
+                'username' => $this->getFaker()->userName,
+                'auth_key' => $security->generateRandomString(),
+                'password_hash' => $security->generatePasswordHash('123123', 4),
+                'email' => $this->getFaker()->email,
+                'status' => User::STATUS_ACTIVE,
+                'created_at' => time(),
+                'updated_at' => time(),
+            ])->execute();
+        }
+    }
+
+    private function generatePosts()
+    {
     }
 
     private function clear()
