@@ -13,6 +13,7 @@ abstract class Comment extends ActiveRecord
     {
         //return AdjacencyListComment::className();
         return NestedSetComment::className();
+        //return MaterializedPathComment::className();
     }
 
     public static function instantiate($row)
