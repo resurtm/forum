@@ -31,8 +31,6 @@ class NestedSetComment extends Comment
         foreach ($comments as &$comment) {
             $comment['children'] = [];
         }
-//        echo '<pre>';
-//        \yii\helpers\VarDumper::dump($comments);die;
         return $comments;
     }
 
